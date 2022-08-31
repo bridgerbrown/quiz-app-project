@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Inter';
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.Container {
+  width: 700px;
+  height: 800px;
+  background-color: #F5F7FB;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+h1 {
+  margin: 0;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 31.25px;
+  color: #293264;
+}
+
+h2 {
+  font-family: 'Inter';
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  color: #293264;
+}
+
+h3 {    
+  font-weight: 500;
+  font-size: 18px;
+  color: #293264;
+  text-align: left;
+}
+
+/* START PAGE */
+
+.StartBtn {
+  width: 193px;
+  height: 52px;
+  background: #4D5B9E;
+  border-radius: 15px;
+  border: none;
+  color: white;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: center;
+}
+
+/* QUESTIONS PAGE */
+
+.Answers button {
+  width: 105.92px;
+  height: 30.65px;
+  margin-right: 0.75em;
+  
+  
+  border: 0.794239px solid #4D5B9E;
+  border-radius: 16px;
+  background: none;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  
+  color: #293264;
+}
+
+.Question {
+  border-bottom: 1px solid #DBDEF0;
+  width: 500px;
+  margin: 0 auto 1.25em;
+}
+
+.Answers {
+  padding-bottom: 1em;
+  display: flex;
+  justify-content: flex-start;
+}
+/* 
+div .SelectedAnswer {
+  background-color: #D6DBF5;
+  border: none;
+} */
+
+button.CheckAnswers {
+  width: 160px;
+  height: 50px;
+  background: #4D5B9E;
+  border-radius: 16px;
+  border: none;
+  color: #F5F7FB;
+  margin: 0.25em auto;
+  font-weight: 500;
+  text-align: center;
+}
+
+form div {
+  width: 110px;
+  height: 50px;
+  background: #4D5B9E;
+  border-radius: 16px;
+  border: none; 
+  margin: 0 0.5em;
+   
+}
+
+div input[type="radio"] {
+  appearance: none;
+  width: 100px;
+  height: 50px;
+  position: relative;
+  top: -33px;
+}
+
+form {
+  display: flex;
+}
+
+label {
+  color: white;
+  display: flex;
+  justify-content: center;
+  padding-top: 0.9em;
+}
+
+
