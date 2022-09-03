@@ -13,16 +13,20 @@ export default function App() {
     
 // ~~~~~~ START PAGE ~~~~~~
     // Form dropdowns
+    const [category, setCategory] = useState({
+        value: 9
+    })
+    const [difficulty, setDifficulty] = useState({
+        value: "easy"
+    })
 
-    function getFormCategory(categorySelection) {
-        let chosenCategory = categorySelection
+    handleCategoryCallback = (childData) => {
+        setCategory({value: childData})
     }
 
-    function getFormDifficulty(difficultySelection) {
-        let chosenDifficulty = difficultySelection
+    handleDifficultyCallback = (childData) => {
+        setDifficulty({value: childData})
     }
-
-    
 
     // Redirects to Question page
     function startBtn() {  
@@ -58,7 +62,7 @@ export default function App() {
         
     
         useEffect(() => {
-            fetch(`https://opentdb.com/api.php?amount=5&category=${chosenCategory}&difficulty=${chosenDifficulty}&type=multiple`)   
+            fetch(`https://opentdb.com/api.php?amount=5&category=${category.value}&difficulty=${difficulty.value}&type=multiple`)   
                 .then(res => res.json())
                 .then(data =>  {
                     setQuestions(data.results.map(result => {
@@ -113,7 +117,12 @@ export default function App() {
         <div className="Container">
             {
                 startQuiz ?
-                <Start handleClick={startBtn} formCategoryProp={getFormCategory} formDifficultyProp={getFormDifficulty}/>
+                <Start handleClick={startBtn} 
+                    categoryCallback={handleCategoryCallback} 
+                    categoryProp={category}
+                    difficultyCallback={handleDifficultyCallback} 
+                    difficultyProp={difficulty}
+                />
                 :
                 <div className="QuestionsContainer">
                   <h1>Quizzical</h1>
