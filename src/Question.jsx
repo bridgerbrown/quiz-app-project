@@ -23,7 +23,7 @@ export default function Question(props) {
             click = () => props.setSelectedAnswer(props.id, answer)
         }
         
-        return <div>
+        return <div className="Answer">
                     <button 
                     onClick={click}
                     key={answer}

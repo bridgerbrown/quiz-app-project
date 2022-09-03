@@ -1,25 +1,40 @@
 import React from "react"
+import {useState, useEffect} from "react"
 import Start from "./Start.jsx"
 import Question from "./Question.jsx"
 
 export default function App() {
-    const [startQuiz, setStartQuiz ] = React.useState(true)
-    const [questions, setQuestions] = React.useState([])
-    const [endGame, setEndGame] = React.useState(false)
-    const [correctAnswers, setCorrectAnswers] = React.useState(0)
-    const [newPage, setNewPage] = React.useState(false)
-    
-// ~~~ START PAGE ~~~
+    const [startQuiz, setStartQuiz ] = useState(true)
+    const [endGame, setEndGame] = useState(false)
+    const [questions, setQuestions] = useState([])
+    const [correctAnswers, setCorrectAnswers] = useState(0)
+    const [newPage, setNewPage] = useState(false)
 
-    // Start button to Quiz page
-    function startBtn() { setStartQuiz(prevState => !prevState)  }
+    
+// ~~~~~~ START PAGE ~~~~~~
+    // Form dropdowns
+
+    function getFormCategory(categorySelection) {
+        let chosenCategory = categorySelection
+    }
+
+    function getFormDifficulty(difficultySelection) {
+        let chosenDifficulty = difficultySelection
+    }
+
+    
+
+    // Redirects to Question page
+    function startBtn() {  
+      setStartQuiz(prevState => !prevState)
+    }
     
     
-// ~~~ QUIZ PAGE ~~~
+// ~~~~~~ QUIZ PAGE ~~~~~~
 
 
     // ENDGAME to check answers
-    React.useEffect(() => {
+    useEffect(() => {
         if (endGame) {
             const reducedToCorrect = questions.reduce((prev, current) => {
                 return current.correctAnswer === current.selectedAnswer ? prev + 1 : prev
@@ -40,10 +55,10 @@ export default function App() {
     }
     
     // API DATA receiving all questions
+        
     
-    
-        React.useEffect(() => {
-            fetch('https://opentdb.com/api.php?amount=5&category=15&difficulty=medium&type=multiple')   
+        useEffect(() => {
+            fetch(`https://opentdb.com/api.php?amount=5&category=${chosenCategory}&difficulty=${chosenDifficulty}&type=multiple`)   
                 .then(res => res.json())
                 .then(data =>  {
                     setQuestions(data.results.map(result => {
@@ -77,6 +92,7 @@ export default function App() {
     
     function playAgain() {
         setEndGame(false)
+        setStartQuiz(true)
         setNewPage(!newPage)
     }
      
@@ -97,10 +113,11 @@ export default function App() {
         <div className="Container">
             {
                 startQuiz ?
-                <Start handleClick={startBtn} />
+                <Start handleClick={startBtn} formCategoryProp={getFormCategory} formDifficultyProp={getFormDifficulty}/>
                 :
-                <div>
-                        {questionElements}
+                <div className="QuestionsContainer">
+                  <h1>Quizzical</h1>
+                  {questionElements}
                 {
                     endGame
                     ?

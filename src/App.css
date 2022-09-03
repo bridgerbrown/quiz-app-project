@@ -9,8 +9,8 @@ body {
 }
 
 .Container {
-  width: 700px;
-  height: 800px;
+  width: 100vw;
+  height: 100vh;
   background-color: #F5F7FB;
   margin: 0;
   padding: 0;
@@ -24,7 +24,7 @@ h1 {
   margin: 0;
   font-style: normal;
   font-weight: 700;
-  font-size: 31.25px;
+  font-size: 50px;
   color: #293264;
 }
 
@@ -40,7 +40,7 @@ h3 {
   font-weight: 500;
   font-size: 18px;
   color: #293264;
-  text-align: left;
+  text-align: center; 
 }
 
 /* START PAGE */
@@ -58,27 +58,30 @@ h3 {
   font-size: 16px;
   line-height: 19px;
   text-align: center;
+  margin: 1.5em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+select {
+  width: 145px;
+  margin: 0.5em;
+  padding: 5px 10px;
+  border: 1px lightgrey solid;
+}
+
+p {
+  font-size: 12px;
+  opacity: 0.8;
+
 }
 
 /* QUESTIONS PAGE */
-
-.Answers button {
-  width: 105.92px;
-  height: 30.65px;
-  margin-right: 0.75em;
-  
-  
-  border: 0.794239px solid #4D5B9E;
-  border-radius: 16px;
-  background: none;
-  
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 10px;
-  
-  color: #293264;
-}
 
 .Question {
   border-bottom: 1px solid #DBDEF0;
@@ -86,16 +89,43 @@ h3 {
   margin: 0 auto 1.25em;
 }
 
+.QuestionsContainer h1 {
+  margin-bottom: 0.5em;
+}
+
+.QuestionsContainer h3 {
+  margin-top: 1.75em;
+}
+
 .Answers {
   padding-bottom: 1em;
+  margin-bottom: 0.5em;
+  height: 100px;
   display: flex;
-  justify-content: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
-/* 
-div .SelectedAnswer {
-  background-color: #D6DBF5;
-  border: none;
-} */
+
+.Answer {
+  width: 230px;
+  margin: 0 10px;
+}
+
+.Answers button {
+  width: 230px;
+  height: 35px;
+  margin: 0;
+  padding: 0;
+  border: 0.794239px solid #4D5B9E;
+  border-radius: 16px;
+  background: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  color: #293264;
+}
 
 button.CheckAnswers {
   width: 160px;
