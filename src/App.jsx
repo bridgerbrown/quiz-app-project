@@ -1,7 +1,8 @@
 import React from "react"
 import {useState, useEffect} from "react"
-import Start from "./Start.jsx"
 import Question from "./Question.jsx"
+import Categories from "./forms/Categories.jsx"
+import Difficulties from "./forms/Difficulties.jsx"
 
 export default function App() {
     const [startQuiz, setStartQuiz ] = useState(true)
@@ -12,22 +13,11 @@ export default function App() {
 
     
 // ~~~~~~ START PAGE ~~~~~~
-    // Form dropdowns
-    const [category, setCategory] = useState({
-        value: 9
-    })
-    const [difficulty, setDifficulty] = useState({
-        value: "easy"
-    })
+    // Forms
+    const [category, setCategory] = useState()
+    const [difficulty, setDifficulty] = useState()
 
-    handleCategoryCallback = (childData) => {
-        setCategory({value: childData})
-    }
-
-    handleDifficultyCallback = (childData) => {
-        setDifficulty({value: childData})
-    }
-
+    
     // Redirects to Question page
     function startBtn() {  
       setStartQuiz(prevState => !prevState)
@@ -62,18 +52,18 @@ export default function App() {
         
     
         useEffect(() => {
-            fetch(`https://opentdb.com/api.php?amount=5&category=${category.value}&difficulty=${difficulty.value}&type=multiple`)   
+            fetch(`https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`)   
                 .then(res => res.json())
                 .then(data =>  {
                     setQuestions(data.results.map(result => {
                         return {
-                            question: result.question.replace(/&amp;/g,"&").replace(/&quot;/g,'"')          .replace(/&#039;/g, "'"),
+                            question: result.question.replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/&#039;/g, "'"),
                             possibleAnswers: shuffleArray([...result.incorrect_answers, result.correct_answer]),
                             correctAnswer: result.correct_answer,
                             selectedAnswer: ''
                             }
                     }))})
-        }, [newPage])   
+        }, [newPage, category, difficulty])   
                        
     
    
@@ -116,18 +106,23 @@ export default function App() {
     return (
         <div className="Container">
             {
-                startQuiz ?
-                <Start handleClick={startBtn} 
-                    categoryCallback={handleCategoryCallback} 
-                    categoryProp={category}
-                    difficultyCallback={handleDifficultyCallback} 
-                    difficultyProp={difficulty}
-                />
-                :
-                <div className="QuestionsContainer">
-                  <h1>Quizzical</h1>
-                  {questionElements}
-                {
+                startQuiz 
+                ?
+                <div className="StartContainer">
+                    <h1>Quizzical</h1>
+                    <h3>Test your knowledge!</h3>
+
+                    <Categories category={category} setCategory={setCategory} />
+                    <Difficulties difficulty={difficulty} setDifficulty={setDifficulty} />
+
+                    <button className="StartBtn" onClick={startBtn}>Start quiz</button>
+                    <p >Powered by the <a href="https://opentdb.com/" target="_blank">Open Trivia Database API</a>!</p>
+                </div>
+            :
+            <div className="QuestionsContainer">
+                <h1>Quizzical</h1>
+                {questionElements}
+                { 
                     endGame
                     ?
                     <div>
@@ -137,7 +132,7 @@ export default function App() {
                     :
                     <button className="CheckAnswers" onClick={checkAnswers}>Check answers</button>  
                 }
-                </div>
+            </div>
             }
         </div>
     )
