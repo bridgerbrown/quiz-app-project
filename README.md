@@ -1,0 +1,1 @@
+This is a trivia question game with multiple categories and difficulties that uses the data of Open Trivia Database API, this project started out as a part of the Scrimba Front-End Developer Career Path but was fleshed out more on its own.

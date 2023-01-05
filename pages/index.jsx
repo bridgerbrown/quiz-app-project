@@ -1,15 +1,16 @@
 import React from "react"
 import {useState, useEffect} from "react"
-import Question from "./Question.jsx"
-import Categories from "./forms/Categories.jsx"
-import Difficulties from "./forms/Difficulties.jsx"
+import Question from "../components/Question"
+import Categories from "../components/forms/Categories.jsx"
+import Difficulties from "../components/forms/Difficulties.jsx"
 
 export default function App() {
     const [startQuiz, setStartQuiz ] = useState(true)
     const [endGame, setEndGame] = useState(false)
     const [questions, setQuestions] = useState([])
-    const [correctAnswers, setCorrectAnswers] = useState(0)
+    const [correctAnswers, setCorrectAnswers] = useState(null)
     const [newPage, setNewPage] = useState(false)
+    const [emojiResults, setEmojiResults] = useState("")
 
     
 // ~~~~~~ START PAGE ~~~~~~
@@ -18,6 +19,25 @@ export default function App() {
     const [difficulty, setDifficulty] = useState()
 
     
+    function decodeArray(arr) {
+        const decoded = arr.map((element) => 
+            element.replace(/&amp;/g,"&")
+            .replace(/&quot;/g,'"').replace(/&#039;/g, "'")
+            .replace(/&ndash;/g, "-").replace(/&rsquo;/g, "’")
+            .replace(/&ouml;/g, "ö")
+        )
+        console.log(decoded)
+        return decoded
+    }
+
+    function decodeItem(item) {
+        const decoded = item.replace(/&amp;/g,"&")
+        .replace(/&quot;/g,'"').replace(/&#039;/g, "'")
+        .replace(/&ndash;/g, "-").replace(/&rsquo;/g, "’")
+        .replace(/&ouml;/g, "ö")
+        return decoded
+    }  
+
     // Redirects to Question page
     function startBtn() {  
       setStartQuiz(prevState => !prevState)
@@ -28,14 +48,7 @@ export default function App() {
 
 
     // ENDGAME to check answers
-    useEffect(() => {
-        if (endGame) {
-            const reducedToCorrect = questions.reduce((prev, current) => {
-                return current.correctAnswer === current.selectedAnswer ? prev + 1 : prev
-            }, 0)
-            setCorrectAnswers(reducedToCorrect)
-        }
-    })
+
 
     // SHUFFLE FUNCTION for possible answers randomization
     function shuffleArray(array) {
@@ -55,17 +68,16 @@ export default function App() {
             fetch(`https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=multiple`)   
                 .then(res => res.json())
                 .then(data =>  {
+                    console.log(data.results)
                     setQuestions(data.results.map(result => {
                         return {
-                            question: result.question.replace(/&amp;/g,"&").replace(/&quot;/g,'"').replace(/&#039;/g, "'"),
-                            possibleAnswers: shuffleArray([...result.incorrect_answers, result.correct_answer]),
-                            correctAnswer: result.correct_answer,
+                            question: decodeItem(result.question),
+                            possibleAnswers: decodeArray(shuffleArray([...result.incorrect_answers, result.correct_answer])),
+                            correctAnswer: decodeItem(result.correct_answer),
                             selectedAnswer: ''
                             }
                     }))})
         }, [newPage, category, difficulty])   
-                       
-    
    
     
     // SET SELECTED ANSWER function (map through questions to find matching id of selected, then set selectedAnswer to true)
@@ -82,6 +94,25 @@ export default function App() {
     
     function checkAnswers() {
         setEndGame(true)
+        console.log(questions)
+        const reducedToCorrect = questions.reduce((prev, current) => {
+            return current.correctAnswer === current.selectedAnswer ? prev + 1 : prev
+        }, 0)
+        console.log(reducedToCorrect)
+        setCorrectAnswers(reducedToCorrect)
+        if (reducedToCorrect === 0) {
+            setEmojiResults("😭😱💔")
+        } else if (reducedToCorrect === 1) {
+            setEmojiResults("🥺")
+        } else if (reducedToCorrect === 2) {
+            setEmojiResults("😪")
+        } else if (reducedToCorrect === 3) {
+            setEmojiResults("🙂")
+        } else if (reducedToCorrect === 4) {
+            setEmojiResults("😀😎")
+        } else if (reducedToCorrect === 5) {
+            setEmojiResults("🤩🥳🎉")
+        }
     }
     
     function playAgain() {
@@ -116,7 +147,7 @@ export default function App() {
                     <Difficulties difficulty={difficulty} setDifficulty={setDifficulty} />
 
                     <button className="StartBtn" onClick={startBtn}>Start quiz</button>
-                    <p >Powered by the <a href="https://opentdb.com/" target="_blank">Open Trivia Database API</a>!</p>
+                    <p >Powered by the <a href="https://opentdb.com/" target="_blank" rel="noreferrer">Open Trivia Database API</a>!</p>
                 </div>
             :
             <div className="QuestionsContainer">
@@ -125,9 +156,10 @@ export default function App() {
                 { 
                     endGame
                     ?
-                    <div>
+                    <div className="ScoreContainer">
+                        <div className="emojis">{emojiResults}</div>
                         <h2 className="Score">You scored {correctAnswers}/5 correct answers!</h2>
-                        <button onClick={playAgain} className="CheckAnswers">Play Again</button>
+                        <button onClick={playAgain} className="PlayAgain">Play Again</button>
                     </div>
                     :
                     <button className="CheckAnswers" onClick={checkAnswers}>Check answers</button>  

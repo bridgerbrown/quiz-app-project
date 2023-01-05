@@ -1,23 +1,38 @@
 * {
   box-sizing: border-box;
-  font-family: 'Inter';
+  font-family: 'Quicksand', sans-serif;
 }
 
 body {
   margin: 0;
   padding: 0;
+  background-color: #F5F7FB;
 }
 
 .Container {
   width: 100vw;
-  height: 100vh;
-  background-color: #F5F7FB;
-  margin: 0;
   padding: 0;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+}
+
+.QuestionsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem auto;
+}
+
+.StartContainer {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -29,16 +44,15 @@ h1 {
 }
 
 h2 {
-  font-family: 'Inter';
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   text-align: center;
   color: #293264;
 }
 
 h3 {    
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: #293264;
   text-align: center; 
 }
@@ -52,7 +66,6 @@ h3 {
   border-radius: 15px;
   border: none;
   color: white;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -86,12 +99,12 @@ p {
 .Question {
   border-bottom: 1px solid #DBDEF0;
   width: 500px;
-  margin: 0 auto 1.25em;
+  margin: 0 auto 0.5rem;
 }
 
-.QuestionsContainer h1 {
+/* .QuestionsContainer h1 {
   margin-bottom: 0.5em;
-}
+} */
 
 .QuestionsContainer h3 {
   margin-top: 1.75em;
@@ -114,13 +127,12 @@ p {
 
 .Answers button {
   width: 230px;
-  height: 35px;
+  min-height: 35px;
   margin: 0;
-  padding: 0;
+  padding: 0.1rem 0.3rem;
   border: 0.794239px solid #4D5B9E;
   border-radius: 16px;
   background: none;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -134,7 +146,19 @@ button.CheckAnswers {
   border-radius: 16px;
   border: none;
   color: #F5F7FB;
-  margin: 0.25em auto;
+  margin: 1rem auto;
+  font-weight: 500;
+  text-align: center;
+}
+
+button.PlayAgain {
+  width: 160px;
+  height: 50px;
+  background: #4D5B9E;
+  border-radius: 16px;
+  border: none;
+  color: #F5F7FB;
+  margin: 0.25rem auto;
   font-weight: 500;
   text-align: center;
 }
@@ -168,4 +192,10 @@ label {
   padding-top: 0.9em;
 }
 
+.emojis {
+  font-size: 1.5em;
+}
 
+.ScoreContainer {
+  margin-top: 1rem;
+}
